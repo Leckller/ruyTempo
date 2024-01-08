@@ -1,3 +1,5 @@
-# Create Trybe App
+App De Previsão do Tempo
 
-Esse é um projeto criado com as principais tecnologias utilizadas no módulo de front-end da Trybe.
+Utilizando de uma api gratuita que disponibiliza 1M de requisições por Mês.
+
+Foram utilizado as seguintes tecnologias neste projeto: Tailwind, React-Router-Dom, React, TypeScript.
