@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { searchAutoComplete } from '../services/endPoints';
@@ -41,14 +43,27 @@ function Home() {
         items-center mt-5
       "
       >
-        <h2>{!locais ? 'Últimas Pesquisas' : `Resultados para "${search}"`}</h2>
+        <h2 className="text-2xl">
+          {!locais ? localStorage.getItem('lastSearch') ? 'Últimas Pesquisas' : 'Bem Vindo ao ruyTempo!'
+            : `Resultados para "${search}"`}
+
+        </h2>
 
         <section
           className="flex w-full flex-row flex-wrap"
         >
-          {locais && locais.map((loc) => (
-            <LinkSearchComp key={ loc.id } loc={ loc } />
-          ))}
+          {locais ? (
+            locais.map((loc) => (
+              <LinkSearchComp key={ loc.id } loc={ loc } />
+            ))
+          ) : (
+            localStorage.getItem('lastSearch') ? (
+              <LinkSearchComp loc={ JSON.parse(localStorage.getItem('lastSearch') as string) } />
+            ) : (
+              <h2 className="p-5 text-center">
+                Digite no campo a cima uma cidade/país/estado para saber o Tempo na região
+              </h2>)
+          )}
         </section>
 
       </main>

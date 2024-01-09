@@ -1,4 +1,4 @@
-export type Current = {
+export type CurrentType = {
   location: {
     name: string,
     region: string,

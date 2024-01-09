@@ -4,6 +4,9 @@ import { SearchComplete } from '../types';
 function LinkSearchComp({ loc }: { loc: SearchComplete }) {
   return (
     <Link
+      onClickCapture={ () => {
+        localStorage.setItem('lastSearch', JSON.stringify(loc));
+      } }
       to={ `/current/${loc.url}` }
       key={ loc.id }
       className="w-1/2 flex flex-col items-center justify-around mb-10 mt-5"
