@@ -82,7 +82,7 @@ function Current() {
         <section className="flex flex-row gap-5 items-start p-5 w-full">
           <h2 className="w-1/2">{`Humidade ${curr?.current.humidity}%`}</h2>
           <h2 className="w-1/2">
-            {`Chuva ${curr?.forecast.forecastday[0].day.daily_chance_of_rain} %`}
+            {`Chuva ${curr?.forecast.forecastday[0].day.daily_chance_of_rain}%`}
           </h2>
         </section>
 
