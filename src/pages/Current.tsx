@@ -4,16 +4,21 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FaLongArrowAltDown, FaLongArrowAltUp } from 'react-icons/fa';
 import { current } from '../services/endPoints';
 import { WeatherData } from '../types';
+import Loading from '../components/Loading';
 
 function Current() {
   const [curr, setCurr] = useState<WeatherData>();
+  const [isLoading, setIsLoading] = useState(true);
   const { loc } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    current(loc as string, 3).then((resp) => setCurr(resp));
+    current(loc as string, 3).then((resp) => {
+      setCurr(resp);
+      setIsLoading(false);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  if (isLoading) return <Loading />;
   return (
     <>
       <header
@@ -31,6 +36,7 @@ function Current() {
         <section
           className="flex flex-row w-full gap-5 p-5"
         >
+
           {/* Top Section */}
           <img
             src={ curr?.current.condition.icon.replace('64x64', '128x128') }
