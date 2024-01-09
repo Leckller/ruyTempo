@@ -2,15 +2,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { current } from '../services/endPoints';
-import { CurrentType } from '../types';
+import { WeatherData } from '../types';
 
 function Current() {
-  const [curr, setCurr] = useState<CurrentType>();
+  const [curr, setCurr] = useState<WeatherData>();
   const { loc } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    current(loc as string).then((resp) => setCurr(resp));
+    current(loc as string, 3).then((resp) => setCurr(resp));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -34,21 +35,33 @@ function Current() {
             src={ curr?.current.condition.icon.replace('64x64', '128x128') }
             alt="clima"
           />
-          <div className="mt-5">
-            <h2 className="text-xl">
-              {curr?.current.condition.text}
-            </h2>
-            <h2>
-              {`Última atualização às ${curr?.current.last_updated.split(' ')[1]}`}
-            </h2>
+          <div className="mt-2 flex flex-col gap-2">
+            <h2 className="text-2xl">{curr?.current.condition.text}</h2>
+
+            <h2 className="text-6xl">{`${curr?.current.temp_c} °C`}</h2>
+
+            <h2>{`Última atualização às ${curr?.current.last_updated.split(' ')[1]}`}</h2>
           </div>
+
         </section>
+
         <section
-          className="w-full flex flex-col items-start p-5"
+          className="w-full flex flex-row items-start p-5 text-lg"
         >
-          <h2>{`Temperadura de ${curr?.current.temp_c} °C`}</h2>
-          <h2>{`Sensação Térmica de ${curr?.current.feelslike_c} °C`}</h2>
+
+          <h2 className="w-1/2">{`Sensação ${curr?.current.feelslike_c} °C`}</h2>
+
+          <h2 className="w-1/2">
+            {curr?.current.cloud as number > 15 ? 'Muitas Nuvens'
+              : 'Poucas Nuvens'}
+          </h2>
+
         </section>
+
+        <section>
+          {`Humidade ${curr?.current.humidity}%`}
+        </section>
+
       </main>
     </>
   );

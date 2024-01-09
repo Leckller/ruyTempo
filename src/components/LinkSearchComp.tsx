@@ -5,7 +5,13 @@ function LinkSearchComp({ loc }: { loc: SearchComplete }) {
   return (
     <Link
       onClickCapture={ () => {
-        localStorage.setItem('lastSearch', JSON.stringify(loc));
+        if (!localStorage.getItem('lastSearch')) {
+          localStorage.setItem('lastSearch', JSON.stringify([loc]));
+        } else {
+          localStorage.setItem('lastSearch', JSON
+            .stringify([...JSON.parse(localStorage.getItem('lastSearch') as string),
+              loc]));
+        }
       } }
       to={ `/current/${loc.url}` }
       key={ loc.id }

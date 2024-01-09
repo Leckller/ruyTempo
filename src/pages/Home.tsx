@@ -58,11 +58,21 @@ function Home() {
             ))
           ) : (
             localStorage.getItem('lastSearch') ? (
-              <LinkSearchComp loc={ JSON.parse(localStorage.getItem('lastSearch') as string) } />
+              JSON.parse(localStorage.getItem('lastSearch') as string).map((locate: SearchComplete) => (
+                <LinkSearchComp loc={ locate } key={ locate.id } />
+              ))
             ) : (
-              <h2 className="p-5 text-center">
-                Digite no campo a cima uma cidade/país/estado para saber o Tempo na região
-              </h2>)
+              <div className="p-5 text-center flex flex-col gap-3">
+
+                <h2>
+                  Digite no campo a cima uma cidade/país/estado para saber o Tempo na região
+                </h2>
+
+                <h2>
+                  Caso não encontre a região desejada tente pesquisar sem utilizar caracteres especiais e acentos.
+                </h2>
+
+              </div>)
           )}
         </section>
 
