@@ -16,11 +16,11 @@ function LinkSearchComp({ loc }: { loc: SearchComplete }) {
       } }
       to={ `/current/${loc.url}` }
       key={ loc.id }
-      className="w-[150px] flex flex-col items-center justify-around
-       mb-10 mt-5 grow"
+      className="max-w-[250px] w-[150px] flex flex-col items-center justify-around
+       mb-5 mt-5 grow"
     >
       <div
-        className="border w-[90%] h-full p-3 rounded-lg
+        className="border w-[90%] min-h-[100px] h-full p-3 rounded-lg
       flex flex-col items-center shadow-2xl gap-2"
       >
         <h2 className="scale-105 text-center">{loc.name}</h2>
