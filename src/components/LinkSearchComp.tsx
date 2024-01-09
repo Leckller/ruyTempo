@@ -9,13 +9,15 @@ function LinkSearchComp({ loc }: { loc: SearchComplete }) {
           localStorage.setItem('lastSearch', JSON.stringify([loc]));
         } else {
           localStorage.setItem('lastSearch', JSON
-            .stringify([...JSON.parse(localStorage.getItem('lastSearch') as string),
-              loc]));
+            .stringify([loc,
+              ...JSON.parse(localStorage.getItem('lastSearch') as string)
+                .filter((l2: SearchComplete) => l2.id !== loc.id)]));
         }
       } }
       to={ `/current/${loc.url}` }
       key={ loc.id }
-      className="w-1/2 flex flex-col items-center justify-around mb-10 mt-5"
+      className="w-[150px] flex flex-col items-center justify-around
+       mb-10 mt-5 grow"
     >
       <div
         className="border w-[90%] h-full p-3 rounded-lg

@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-max-depth */
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { FaLongArrowAltDown, FaLongArrowAltUp } from 'react-icons/fa';
 import { current } from '../services/endPoints';
 import { WeatherData } from '../types';
 
@@ -8,10 +9,9 @@ function Current() {
   const [curr, setCurr] = useState<WeatherData>();
   const { loc } = useParams();
   const navigate = useNavigate();
-
   useEffect(() => {
     current(loc as string, 3).then((resp) => setCurr(resp));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -31,6 +31,7 @@ function Current() {
         <section
           className="flex flex-row w-full gap-5 p-5"
         >
+          {/* Top Section */}
           <img
             src={ curr?.current.condition.icon.replace('64x64', '128x128') }
             alt="clima"
@@ -39,6 +40,20 @@ function Current() {
             <h2 className="text-2xl">{curr?.current.condition.text}</h2>
 
             <h2 className="text-6xl">{`${curr?.current.temp_c} °C`}</h2>
+
+            <div className="flex flex-row items-center justify-center gap-3">
+
+              <span className="flex flex-row items-center">
+                <FaLongArrowAltUp className="text-red-600" />
+                {curr?.forecast.forecastday[0].day.maxtemp_c}
+              </span>
+
+              <span className="flex flex-row items-center">
+                <FaLongArrowAltDown className="text-blue-900" />
+                {curr?.forecast.forecastday[0].day.mintemp_c}
+              </span>
+
+            </div>
 
             <h2>{`Última atualização às ${curr?.current.last_updated.split(' ')[1]}`}</h2>
           </div>
@@ -58,8 +73,11 @@ function Current() {
 
         </section>
 
-        <section>
-          {`Humidade ${curr?.current.humidity}%`}
+        <section className="flex flex-row gap-5 items-start p-5 w-full">
+          <h2 className="w-1/2">{`Humidade ${curr?.current.humidity}%`}</h2>
+          <h2 className="w-1/2">
+            {`Chuva ${curr?.forecast.forecastday[0].day.daily_chance_of_rain} %`}
+          </h2>
         </section>
 
       </main>

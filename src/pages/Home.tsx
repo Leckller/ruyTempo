@@ -1,7 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { searchAutoComplete } from '../services/endPoints';
 import { SearchComplete } from '../types';
 import LinkSearchComp from '../components/LinkSearchComp';
@@ -38,19 +37,15 @@ function Home() {
 
       </header>
 
-      <main
-        className=" flex flex-col gap-5 flex-wrap w-full h-[90%]
-        items-center mt-5
-      "
-      >
-        <h2 className="text-2xl">
+      <main>
+        <h2 className="text-2xl w-full text-center">
           {!locais ? localStorage.getItem('lastSearch') ? 'Últimas Pesquisas' : 'Bem Vindo ao ruyTempo!'
             : `Resultados para "${search}"`}
 
         </h2>
 
         <section
-          className="flex w-full flex-row flex-wrap"
+          className="flex w-full h-full flex-row flex-wrap items-center justify-around"
         >
           {locais ? (
             locais.map((loc) => (
