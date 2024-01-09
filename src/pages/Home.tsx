@@ -1,5 +1,6 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { searchAutoComplete } from '../services/endPoints';
 import { SearchComplete } from '../types';
 import LinkSearchComp from '../components/LinkSearchComp';
@@ -36,19 +37,38 @@ function Home() {
 
       </header>
 
-      <main
-        className=" flex flex-col gap-5 flex-wrap w-full h-[90%]
-        items-center mt-5
-      "
-      >
-        <h2>{!locais ? 'Últimas Pesquisas' : `Resultados para "${search}"`}</h2>
+      <main>
+        <h2 className="text-2xl w-full text-center">
+          {!locais ? localStorage.getItem('lastSearch') ? 'Últimas Pesquisas' : 'Bem Vindo ao ruyTempo!'
+            : `Resultados para "${search}"`}
+
+        </h2>
 
         <section
-          className="flex w-full flex-row flex-wrap"
+          className="flex w-full h-full flex-row flex-wrap items-center justify-around"
         >
-          {locais && locais.map((loc) => (
-            <LinkSearchComp key={ loc.id } loc={ loc } />
-          ))}
+          {locais ? (
+            locais.map((loc) => (
+              <LinkSearchComp key={ loc.id } loc={ loc } />
+            ))
+          ) : (
+            localStorage.getItem('lastSearch') ? (
+              JSON.parse(localStorage.getItem('lastSearch') as string).map((locate: SearchComplete) => (
+                <LinkSearchComp loc={ locate } key={ locate.id } />
+              ))
+            ) : (
+              <div className="p-5 text-center flex flex-col gap-3">
+
+                <h2>
+                  Digite no campo a cima uma cidade/país/estado para saber o Tempo na região
+                </h2>
+
+                <h2>
+                  Caso não encontre a região desejada tente pesquisar sem utilizar caracteres especiais e acentos.
+                </h2>
+
+              </div>)
+          )}
         </section>
 
       </main>
